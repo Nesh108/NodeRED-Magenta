@@ -1,1 +1,16 @@
-s
+{
+  "name": "node-red-contrib-reinhard-magenta-connector",
+  "version": "1.0.0",
+  "description": "<b>Magenta Connector</b>",
+  "main": "magenta-connector.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Team 36",
+  "license": "dont know",
+  "node-red" : {
+        "nodes": {
+            "magenta-connector": "magenta-connector.js"
+        }
+    }
+}
