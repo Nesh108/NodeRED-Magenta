@@ -1,0 +1,25 @@
+[
+    {
+        "id": "5faffb4.5d2ff04",
+        "type": "delay",
+        "z": "c69f547e.f47978",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 240,
+        "y": 300,
+        "wires": [
+            [
+                "ec0d3fe1.760ba"
+            ]
+        ]
+    }
+]
