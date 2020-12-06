@@ -1,0 +1,49 @@
+<script type="text/javascript">
+    RED.nodes.registerType('magenta-connector',{
+        category: 'device',
+        color: '#FFAAEB',
+        defaults: {
+            name: {value:"Magenta Connector"},
+			host: {value:"localhost"},
+			port: {value:"65432"},
+			device: {value:"MagentaXXXXX"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "speaker.png",
+        label: function() {
+            return this.name||"Magenta Connector";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="magenta-connector">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">		
+	</div>		
+	<div class="form-row">
+		<div class="form-row">Connection details:</div>
+		<div class="form-row">
+			<label for="node-input-host"><i class="fa fa-folder"></i> Host</label>
+			<input type="text" id="node-input-host" style="width:35%;" />
+			<label for="node-input-port"><i class="fa fa-tag"></i> Port</label>
+			<input type="text" id="node-input-port" placeholder="Port" style="width:20%; " >
+		</div>
+	</div>
+	<div class="form-row">Device details:</div>
+	<div class="form-row">
+		<label for="node-input-device"><i class="fa fa-tag"></i> Device ID</label>
+        <input type="text" id="node-input-device" placeholder="Device" style="width:50%;" >
+	</div>
+	
+	<div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tags"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="" style="width: 70%;">
+    </div>
+	
+</script>
+
+<script type="text/html" data-help-name="magenta-connector">
+    <p>A node that connects to your Magenta smart speaker</p>
+</script>
