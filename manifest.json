@@ -1,0 +1,11 @@
+{
+  "configuration": [],
+  "tokens": [
+    {
+      "id": "cvi",
+      "parameter": {
+        "type": "CVI"
+      }
+    }
+  ]
+} 

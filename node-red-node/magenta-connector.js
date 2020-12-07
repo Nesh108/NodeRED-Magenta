@@ -56,7 +56,7 @@ module.exports = function(RED) {
 		
 		function SendHelloServer() {
 			// todo need to escape ' in config.device
-			line = '{"id": ' + config.device + '}';
+			line = JSON.stringify({ id: "config.device" });
 			TcpSend(line);
 		}
 

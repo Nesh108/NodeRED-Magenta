@@ -1,0 +1,16 @@
+{
+  "v2": {
+    "showsInCatalog": true,
+    "displayName": "Magenta NodeRED",
+    "headline": "Plugin for NodeRED",
+    "description": "Turn your Magenta speaker into an input/ouput for your NodeRED flow",
+    "iconUrl": "https://ww1.prweb.com/prfiles/2017/08/07/14579081/gI_62395_node-red.png",
+    "design": {
+      "backgroundColor": "#FF00FF"
+    },
+    "examplePhrases": [
+      "öffne die Fenster"
+    ]
+  },
+  "fileVersion": 1
+}
