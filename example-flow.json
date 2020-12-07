@@ -1,19 +1,20 @@
 [
     {
-        "id": "52f38199.90a13",
+        "id": "897f7213.582a4",
         "type": "magenta-connector",
-        "z": "c69f547e.f47978",
-        "name": "Magenta Connector",
-        "host": "localhost",
-        "port": "65432",
-        "device": "MagentaXXXXX",
-        "x": 410,
+        "z": "6a510000.59fd1",
+        "name": "Magenta Connector 18.193.47.248",
+        "host": "18.193.47.248",
+        "port": "4242",
+        "device": "Magenta483a",
+        "x": 520,
         "y": 60,
         "wires": [
             [
-                "3838e34f.6dd66c",
-                "e6c69f3c.307c1"
+                "b1b8ed06.1b857",
+                "fb52f80d.28f998"
             ]
-        ]
+        ],
+        "icon": "node-red/bridge.png"
     }
 ]
