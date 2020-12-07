@@ -1,24 +1,18 @@
 [
     {
-        "id": "5faffb4.5d2ff04",
-        "type": "delay",
+        "id": "52f38199.90a13",
+        "type": "magenta-connector",
         "z": "c69f547e.f47978",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "1",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "x": 240,
-        "y": 300,
+        "name": "Magenta Connector",
+        "host": "localhost",
+        "port": "65432",
+        "device": "MagentaXXXXX",
+        "x": 410,
+        "y": 60,
         "wires": [
             [
-                "ec0d3fe1.760ba"
+                "3838e34f.6dd66c",
+                "e6c69f3c.307c1"
             ]
         ]
     }
