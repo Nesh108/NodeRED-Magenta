@@ -49,7 +49,7 @@ module.exports = function(RED) {
 		}
 	
 		// reconnect again in few seconds
-		function Reconnect(mseconds = 5000) {
+		function Reconnect(mseconds = 10000) {
 			node.log('Reconnect in ' + mseconds + " ms")
 			setTimeout(Connect, mseconds);
 		}
@@ -61,6 +61,7 @@ module.exports = function(RED) {
 		}
 
 		socket.on('error', function(err) {
+			//socket.destroy();
 			node.log('socket error ' + err.code);			
 			node.status({fill:"red",shape:"dot",text:"disconnected"});
 			Reconnect();
@@ -95,7 +96,9 @@ module.exports = function(RED) {
 
 		node.on("close",function() {
 			node.log("node close");	
-			node.status({fill:"red",shape:"dot",text:"disconnected"});			
+			socket.end();		
+            socket.destroy();
+            socket.unref();			
 		})
 			
 		Connect();			
