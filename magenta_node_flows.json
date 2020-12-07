@@ -1,1 +1,257 @@
-[{"id":"94a1d2e1.bd5028","type":"tab","label":"Flow 1","disabled":false,"info":""},{"id":"b7349d6c.9fb5f8","type":"inject","z":"94a1d2e1.bd5028","name":"Connect to Magenta Server","props":[{"p":"payload"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"{\"id\":\"Magenta7828a\"}","payloadType":"str","x":170,"y":80,"wires":[["b36d2aea.59cf2"]]},{"id":"b36d2aea.59cf2","type":"tcp request","z":"94a1d2e1.bd5028","server":"localhost","port":"65432","out":"sit","splitc":" ","name":"nodered","x":280,"y":280,"wires":[["1bcaba88.d1bb4d"]]},{"id":"8c98412a.b2418","type":"debug","z":"94a1d2e1.bd5028","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","statusVal":"","statusType":"auto","x":670,"y":420,"wires":[]},{"id":"1bcaba88.d1bb4d","type":"function","z":"94a1d2e1.bd5028","name":"Byte to ASCII","func":"msg.payload = Buffer.from(msg.payload);\nmsg.payload = msg.payload.toString();\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","x":490,"y":360,"wires":[["8c98412a.b2418","ec135755.5f5658"]]},{"id":"ec135755.5f5658","type":"switch","z":"94a1d2e1.bd5028","name":"Action Checker","property":"payload","propertyType":"msg","rules":[{"t":"cont","v":"open the windows","vt":"str"}],"checkall":"true","repair":false,"outputs":1,"x":680,"y":320,"wires":[["5f7e3219.27ae5c"]]},{"id":"68b3bdac.a427ac","type":"inject","z":"94a1d2e1.bd5028","name":"Send Reply to Magenta","props":[{"p":"payload"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"{\"response\":\"Action Performed\"}","payloadType":"str","x":260,"y":500,"wires":[["b36d2aea.59cf2"]]},{"id":"5f7e3219.27ae5c","type":"function","z":"94a1d2e1.bd5028","name":"Open Window","func":"\nmsg.payload = \"{\\\"response\\\":\\\"Action Performed\\\"}\";\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","x":760,"y":180,"wires":[["b36d2aea.59cf2"]]}]
+[
+    {
+        "id": "c69f547e.f47978",
+        "type": "tab",
+        "label": "Magenta Flow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "79e90afe.7f6694",
+        "type": "debug",
+        "z": "c69f547e.f47978",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 910,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "5faffb4.5d2ff04",
+        "type": "delay",
+        "z": "c69f547e.f47978",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 380,
+        "y": 540,
+        "wires": [
+            [
+                "ec0d3fe1.760ba"
+            ]
+        ]
+    },
+    {
+        "id": "ec0d3fe1.760ba",
+        "type": "function",
+        "z": "c69f547e.f47978",
+        "name": "Nicht verstanden",
+        "func": "\nmsg.payload = \"Das habe ich nicht verstanden.\" + msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 650,
+        "y": 540,
+        "wires": [
+            [
+                "79e90afe.7f6694",
+                "52f38199.90a13"
+            ]
+        ]
+    },
+    {
+        "id": "52f38199.90a13",
+        "type": "magenta-connector",
+        "z": "c69f547e.f47978",
+        "name": "Magenta Connector",
+        "host": "localhost",
+        "port": "65432",
+        "device": "MagentaXXXXX",
+        "x": 410,
+        "y": 60,
+        "wires": [
+            [
+                "3838e34f.6dd66c",
+                "e6c69f3c.307c1"
+            ]
+        ]
+    },
+    {
+        "id": "3fccc1fa.ec635e",
+        "type": "inject",
+        "z": "c69f547e.f47978",
+        "name": "Alarm Notification",
+        "topic": "",
+        "payload": "notification There was an alarm event at 5am.",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 60,
+        "wires": [
+            [
+                "52f38199.90a13"
+            ]
+        ]
+    },
+    {
+        "id": "3838e34f.6dd66c",
+        "type": "switch",
+        "z": "c69f547e.f47978",
+        "name": "regexing",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "Temperatur",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "Licht",
+                "vt": "str"
+            },
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "15692c70.567c24"
+            ],
+            [
+                "90bf7d20.f051a"
+            ],
+            [
+                "5faffb4.5d2ff04"
+            ]
+        ]
+    },
+    {
+        "id": "e6c69f3c.307c1",
+        "type": "debug",
+        "z": "c69f547e.f47978",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 910,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "15692c70.567c24",
+        "type": "function",
+        "z": "c69f547e.f47978",
+        "name": "Antwort Temperatur",
+        "func": "\n\nmsg.payload = \"Die Raumtemperatur betraegt 20 Grad\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 650,
+        "y": 300,
+        "wires": [
+            [
+                "79e90afe.7f6694",
+                "52f38199.90a13"
+            ]
+        ]
+    },
+    {
+        "id": "ca49fd0b.424e5",
+        "type": "function",
+        "z": "c69f547e.f47978",
+        "name": "Antwort Licht an",
+        "func": "\nmsg.payload = \"Das Licht wurde eingeschaltet\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 360,
+        "wires": [
+            [
+                "79e90afe.7f6694",
+                "52f38199.90a13"
+            ]
+        ]
+    },
+    {
+        "id": "90bf7d20.f051a",
+        "type": "switch",
+        "z": "c69f547e.f47978",
+        "name": "regexing",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "ein",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "an",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "aus",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "dunkel",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 5,
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "ca49fd0b.424e5"
+            ],
+            [
+                "ca49fd0b.424e5"
+            ],
+            [
+                "9ff8478a.a47b28"
+            ],
+            [
+                "9ff8478a.a47b28"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9ff8478a.a47b28",
+        "type": "function",
+        "z": "c69f547e.f47978",
+        "name": "Antwort Licht an",
+        "func": "\nmsg.payload = \"Das Licht wurde ausgeschaltet\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 400,
+        "wires": [
+            [
+                "52f38199.90a13",
+                "79e90afe.7f6694"
+            ]
+        ]
+    }
+]
