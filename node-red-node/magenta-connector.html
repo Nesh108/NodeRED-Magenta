@@ -25,16 +25,22 @@
 	<div class="form-row">
 		<div class="form-row">Connection details:</div>
 		<div class="form-row">
-			<label for="node-input-host"><i class="fa fa-folder"></i> Host</label>
+			
+			<label for="node-input-host"><i class="fa fa-folder"></i> ! Host</label>
 			<input type="text" id="node-input-host" style="width:35%;" />
+			<span style="display: block; padding-left: 106px; color: gray; font-size: x-small;">Skill Server hostname / IP address</span>
+			
 			<label for="node-input-port"><i class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;Port</label>
 			<input type="text" id="node-input-port" placeholder="Port" style="width:15%;" >
+			
+			<span style="display: block; padding-left: 106px; color: gray; font-size: x-small;">Skill Server TCP port</span>
 		</div>
 	</div>
 	<div class="form-row">Device details:</div>
 	<div class="form-row">
 		<label for="node-input-device"><i class="fa fa-tag"></i> Device ID</label>
         <input type="text" id="node-input-device" placeholder="Device" style="width:50%;" >
+		<span style="display: block; padding-left: 106px; color: gray; font-size: x-small;">To get your device ID please have a look into the <a href="#">documentation</a></span>
 	</div>
 	
 	<div class="form-row">
@@ -45,5 +51,6 @@
 </script>
 
 <script type="text/html" data-help-name="magenta-connector">
-    <p>A node that connects to your Magenta smart speaker</p>
+    <p>A node that connects to your Magenta smart speaker Skill <b>Node-red-Magenta</b></p>
+	
 </script>
