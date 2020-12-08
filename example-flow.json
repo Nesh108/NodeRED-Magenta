@@ -3,11 +3,12 @@
         "id": "897f7213.582a4",
         "type": "magenta-connector",
         "z": "6a510000.59fd1",
-        "name": "Magenta Connector 18.193.47.248",
+        "name": "Magenta Connector 18.193.47.248  - 65432",
         "host": "18.193.47.248",
-        "port": "4242",
+        "port": "65432",
+        "topic": "",
         "device": "Magenta483a",
-        "x": 520,
+        "x": 470,
         "y": 60,
         "wires": [
             [
@@ -16,5 +17,358 @@
             ]
         ],
         "icon": "node-red/bridge.png"
+    },
+    {
+        "id": "cd4ed1e8.810cc",
+        "type": "debug",
+        "z": "6a510000.59fd1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 830,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c5c53a9a.bd2148",
+        "type": "function",
+        "z": "6a510000.59fd1",
+        "name": "Nicht verstanden",
+        "func": "\nmsg.payload = \"Das habe ich nicht verstanden: \" + msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 420,
+        "wires": [
+            [
+                "cd4ed1e8.810cc",
+                "897f7213.582a4"
+            ]
+        ]
+    },
+    {
+        "id": "38c15ae9.bda6d6",
+        "type": "inject",
+        "z": "6a510000.59fd1",
+        "name": "Alarm Notification",
+        "topic": "",
+        "payload": "notification There was an alarm event at 5am.",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 140,
+        "y": 60,
+        "wires": [
+            [
+                "897f7213.582a4"
+            ]
+        ]
+    },
+    {
+        "id": "b9f3175.36e37e8",
+        "type": "switch",
+        "z": "6a510000.59fd1",
+        "name": "regexing",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "temperatur",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "licht",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "fenster",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "3cb2d10d.ededae"
+            ],
+            [
+                "b5b61b61.c258f8"
+            ],
+            [
+                "b5b61b61.c258f8"
+            ],
+            [
+                "c5c53a9a.bd2148"
+            ]
+        ]
+    },
+    {
+        "id": "b1b8ed06.1b857",
+        "type": "debug",
+        "z": "6a510000.59fd1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "true",
+        "x": 790,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "3cb2d10d.ededae",
+        "type": "function",
+        "z": "6a510000.59fd1",
+        "name": "Antwort Temperatur",
+        "func": "\n\nmsg.payload = \"Die Raumtemperatur betraegt 20 Grad\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 260,
+        "wires": [
+            [
+                "cd4ed1e8.810cc",
+                "897f7213.582a4"
+            ]
+        ]
+    },
+    {
+        "id": "39b8cf6a.2bb3",
+        "type": "function",
+        "z": "6a510000.59fd1",
+        "name": "Antwort Licht an",
+        "func": "\nmsg.payload = \"Das Licht wurde eingeschaltet\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520,
+        "y": 300,
+        "wires": [
+            [
+                "cd4ed1e8.810cc",
+                "897f7213.582a4"
+            ]
+        ]
+    },
+    {
+        "id": "b5b61b61.c258f8",
+        "type": "switch",
+        "z": "6a510000.59fd1",
+        "name": "regexing",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "ein",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "an",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "aus",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "öffne",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "dunkel",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 6,
+        "x": 320,
+        "y": 340,
+        "wires": [
+            [
+                "39b8cf6a.2bb3"
+            ],
+            [
+                "39b8cf6a.2bb3"
+            ],
+            [
+                "5ed9eba6.501914"
+            ],
+            [
+                "c91e6087.65617"
+            ],
+            [
+                "5ed9eba6.501914"
+            ],
+            [
+                "c5c53a9a.bd2148"
+            ]
+        ]
+    },
+    {
+        "id": "5ed9eba6.501914",
+        "type": "function",
+        "z": "6a510000.59fd1",
+        "name": "Antwort Licht an",
+        "func": "\nmsg.payload = \"Das Licht wurde ausgeschaltet\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520,
+        "y": 340,
+        "wires": [
+            [
+                "897f7213.582a4",
+                "cd4ed1e8.810cc"
+            ]
+        ]
+    },
+    {
+        "id": "1f0aa4de.7eb2db",
+        "type": "tcp out",
+        "z": "6a510000.59fd1",
+        "host": "",
+        "port": "65432",
+        "beserver": "server",
+        "base64": false,
+        "end": false,
+        "name": "Fake Magenta  TCP Server at localhost 65432",
+        "x": 510,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "630232dc.15851c",
+        "type": "inject",
+        "z": "6a510000.59fd1",
+        "name": "Öffne das Fenster",
+        "topic": "",
+        "payload": "Öffne das Fenster",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 460,
+        "wires": [
+            [
+                "1f0aa4de.7eb2db"
+            ]
+        ]
+    },
+    {
+        "id": "c91e6087.65617",
+        "type": "function",
+        "z": "6a510000.59fd1",
+        "name": "Fenster öffnen",
+        "func": "\nmsg.payload = \"Ich habe das Fenster geöffnet\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520,
+        "y": 380,
+        "wires": [
+            [
+                "cd4ed1e8.810cc",
+                "897f7213.582a4"
+            ]
+        ]
+    },
+    {
+        "id": "fb52f80d.28f998",
+        "type": "function",
+        "z": "6a510000.59fd1",
+        "name": "toLowerCase",
+        "func": "msg.payload = msg.payload.toLowerCase();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "b9f3175.36e37e8"
+            ]
+        ]
+    },
+    {
+        "id": "4aa5b05c.0e8d2",
+        "type": "inject",
+        "z": "6a510000.59fd1",
+        "name": "Licht an",
+        "topic": "",
+        "payload": "Schalte das Licht an",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 500,
+        "wires": [
+            [
+                "1f0aa4de.7eb2db"
+            ]
+        ]
+    },
+    {
+        "id": "62b09ff8.7b649",
+        "type": "inject",
+        "z": "6a510000.59fd1",
+        "name": "Licht aus.",
+        "topic": "",
+        "payload": "Schalte das Licht aus.",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 100,
+        "y": 540,
+        "wires": [
+            [
+                "1f0aa4de.7eb2db"
+            ]
+        ]
+    },
+    {
+        "id": "e53f0a0.76e8df8",
+        "type": "inject",
+        "z": "6a510000.59fd1",
+        "name": "Mache Irgendwas.",
+        "topic": "",
+        "payload": "Mache Irgendwas.",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 580,
+        "wires": [
+            [
+                "1f0aa4de.7eb2db"
+            ]
+        ]
     }
 ]
