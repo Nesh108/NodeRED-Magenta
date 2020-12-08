@@ -5,9 +5,9 @@
         defaults: {
             name: {value:"Magenta Connector"},
 			host: {value:"18.193.47.248"},
-			port: {value:"4242"},
-			topic:{value:""],
-			device: {value:"MagentaXXXXX"}
+			port: {value:"65432"},
+			topic:{value:""},
+			device: {value:"Magenta7828a"}
         },
         inputs:1,
         outputs:1,
@@ -27,31 +27,60 @@
 		<div class="form-row">Connection details:</div>
 		<div class="form-row">
 			
-			<label for="node-input-host"><i class="fa fa-folder"></i> ! Host</label>
+			<label for="node-input-host"><i class="fa fa-folder"></i>Host</label>
 			<input type="text" id="node-input-host" style="width:35%;" />
-			<span style="display: block; padding-left: 106px; color: gray; font-size: x-small;">Skill Server hostname / IP address</span>
+			<span style="display: block; padding-left: 106px; color: gray; font-size: x-small;">Node-Red Magenta Skill Server hostname / IP address</span>
 			
 			<label for="node-input-port"><i class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;Port</label>
 			<input type="text" id="node-input-port" placeholder="Port" style="width:15%;" >
 			
-			<span style="display: block; padding-left: 106px; color: gray; font-size: x-small;">Skill Server TCP port</span>
+			<span style="display: block; padding-left: 106px; color: gray; font-size: x-small;">Node-Red Magenta Skill Server TCP port</span>
 		</div>
 	</div>
 	<div class="form-row">Device details:</div>
 	<div class="form-row">
 		<label for="node-input-device"><i class="fa fa-tag"></i> Device ID</label>
         <input type="text" id="node-input-device" placeholder="Device" style="width:50%;" >
-		<span style="display: block; padding-left: 106px; color: gray; font-size: x-small;">To get your device ID please have a look into the <a href="#">documentation</a></span>
+		<span style="display: block; padding-left: 106px; color: gray; font-size: x-small;">To get your device ID please have a look into the <a href="#">documentation.</a></span>
 	</div>
 	
 	<div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tags"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="" style="width: 70%;">
+        <input type="text" id="node-input-topic" placeholder="Topic" style="width: 70%;">
+		<span style="display: block; padding-left: 106px; color: gray; font-size: x-small;">This topic will be set for the output msg object.</span>
+			
     </div>
 	
 </script>
 
 <script type="text/html" data-help-name="magenta-connector">
-    <p>A node that connects to your Magenta smart speaker Skill <b>Node-red-Magenta</b></p>
-	
+    <p>A node that connects to <b>Magenta smart speaker skill</b></p>
+<p>Connects to the Magenta Node Server and gets a command and send back a confirmation.</p>
+
+<h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The text of the confirmation message for sending back to your speaker. </dd>
+    </dl>
+
+<h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The text of the spoken command received from the server. </dd>
+    </dl>
+
+<h3>Details</h3>
+    <p><code>msg.payload</code></p>
+    <p><code>msg.topic</code> can be configured in the node settings.</p>
+    <p></p>
+
+<h3>References</h3>
+    <ul>
+        <li><a>Magenta Skill Node Red-Node</a> documentation</li>
+        <li><a>GitHub</a> - the nodes github repository</li>
+    </ul>
 </script>
