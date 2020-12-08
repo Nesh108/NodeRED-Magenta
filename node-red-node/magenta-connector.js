@@ -2,13 +2,16 @@ module.exports = function(RED) {
 	
 	/////////////////////////////////////////////////////////////
 	//
-	//   
+	//    Magenta Connector node-red node   
+	//    2020-12-08 Reinhard Henning
 	//
 	/////////////////////////////////////////////////////////////
-	// when the connection has established 	
-	//     send {"id": "<DEVICE_NAME>"} 
-	// send every message from the server to the output
-	// send every input message to the server 
+	// what it does:
+	// This node connects to a server via TCP specified in host port
+	// when the connection has established: 	
+	//     send json string {"id": "<DEVICE_NAME>"} 
+	// every message from the server is send to the node output
+	// every input message is send back to the server 
 	/////////////////////////////////////////////////////////////
 	
     function MagentaConnector(config) {
@@ -116,7 +119,5 @@ module.exports = function(RED) {
 		node.log("ready");	
 		Connect();			
     }
-	
     RED.nodes.registerType("magenta-connector",MagentaConnector);
-	
 }
