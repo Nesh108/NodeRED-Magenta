@@ -10,19 +10,18 @@
 from skill_sdk import skill, Response, tell
 from skill_sdk.l10n import _
 import time
-import manage
 import socket
 import json
 
-@skill.intent_handler('TEAM_36_RED_NODE')
-def handler(input_request: str) -> Response:
+
+@skill.intent_handler('TEAM_36_NODE_RED')
+def handler(nodered: str) -> Response:
     print('computing...')
     request_client = "Magenta7828a"
 
-    print("Connected client: ", manage.current_client)
-    print("Input request: ", input_request)
+    print("Input request: ", nodered)
 
-    message = {"message": input_request, "to": request_client}
+    message = {"message": nodered, "to": request_client}
 
     try:
         sock = socket.create_connection(('localhost', 7979))
