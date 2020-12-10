@@ -2,13 +2,16 @@ module.exports = function(RED) {
 	
 	/////////////////////////////////////////////////////////////
 	//
-	//   
+	//    Magenta Connector node-red node   
+	//    2020-12-08 Reinhard Henning
 	//
 	/////////////////////////////////////////////////////////////
-	// when the connection has established 	
-	//     send {"id": "<DEVICE_NAME>"} 
-	// send every message from the server to the output
-	// send every input message to the server 
+	// what it does:
+	// This node connects to a server via TCP specified in host port
+	// when the connection has established: 	
+	//     send json string {"id": "<DEVICE_NAME>"} 
+	// every message from the server is send to the node output
+	// every input message is send back to the server 
 	/////////////////////////////////////////////////////////////
 	
     function MagentaConnector(config) {
@@ -18,11 +21,13 @@ module.exports = function(RED) {
 		this.host = config.host || null;
 		this.port = config.port * 1;
 		this.device = config.device;
+		this.topic = config.topic;
 		
         RED.nodes.createNode(this,config);
 
-		msg = {"topic":this.topic, "payload":""};
-
+		msg = {};
+		timer = {};
+	
         var node = this;
 		var started = false;
 		
@@ -30,6 +35,7 @@ module.exports = function(RED) {
 		node.log("host=" + config.host);
 		node.log("port=" + config.port);
 		node.log("device=" + config.device);
+		node.log("topic=" + config.topic);
 
 		options = {
 			"port": config.port,
@@ -43,20 +49,22 @@ module.exports = function(RED) {
 		// connect to Magenta Skill Server
 		function Connect() {
 			node.status({fill:"yellow",shape:"dot",text:"connecting"});
-			if (node.debug === 'all') node.warn('Data received from ${socket.remoteAddress}:${socket.remotePort}');
 			node.log("connecting to " + options.host + " port " + options.port);
 			socket.connect(options);
 		}
 	
 		// reconnect again in few seconds
 		function Reconnect(mseconds = 10000) {
+			node.log('clear timeout');
+			clearTimeout(timer);
 			node.log('Reconnect in ' + mseconds + " ms")
-			setTimeout(Connect, mseconds);
+			timer = setTimeout(Connect, mseconds);
 		}
 		
 		function SendHelloServer() {
 			// todo need to escape ' in config.device
-			line = JSON.stringify({ id: "config.device" });
+			node.log('Sending device-ID');
+			line = JSON.stringify({ "id": config.device});
 			TcpSend(line);
 		}
 
@@ -81,6 +89,7 @@ module.exports = function(RED) {
 		
 		function TcpSend(text) {
 			if (socket.readyState == "open") {
+				node.log('sending back: ' + text);
 				socket.write(text + "\n");
 			} else {
 				node.log('not connected. Ignored: ' + text);
@@ -88,22 +97,27 @@ module.exports = function(RED) {
 		}
 
 		// response received from a node, send it back to the Skill Server
-        node.on('input', function(newmsg) {
-			msg = newmsg;
+        node.on('input', function(msg) {
+			if (config.topic != "") {
+				// we have configured to override the topic 
+				msg.topic = config.topic;
+			};
+			
             node.log("imput: " + JSON.stringify(msg));			
 			TcpSend(msg.payload);
         });
 
 		node.on("close",function() {
+			node.status({fill:"red",shape:"dot",text:"disconnected"});
 			node.log("node close");	
+			clearTimeout(timer);
 			socket.end();		
             socket.destroy();
             socket.unref();			
 		})
-			
+		
+		node.log("ready");	
 		Connect();			
     }
-	
     RED.nodes.registerType("magenta-connector",MagentaConnector);
-	
 }
