@@ -46,7 +46,7 @@ def start_server(c_msg, port=65432):
                         client_response = json.loads(received_data)["response"]
                         new_socket.send(bytes(json.dumps({"message": "OK", "to": current_client}).encode('utf-8')))
                     else:
-                        msg = c_msg.get()
+                        msg = c_msg.get(block=False)
                         if msg != "":
                             print("Sending to client: ", msg)
                             new_socket.send(bytes(msg.encode("utf-8")))
